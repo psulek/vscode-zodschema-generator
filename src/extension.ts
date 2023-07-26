@@ -6,7 +6,7 @@ import path from 'path';
 
 export const getContext = () => context;
 
-const myScheme = 'ts2zodpreview';
+const myScheme = 'zodschemagen';
 
 
 export async function activate(ctx: vscode.ExtensionContext) {
@@ -29,12 +29,12 @@ export async function activate(ctx: vscode.ExtensionContext) {
 
     // ctx.subscriptions.push(
     //     vscode.commands.registerTextEditorCommand(
-    //         'ts2zodPreview.showPreview',
+    //         'zodschemagen.showPreview',
     //         textEditor => showPreview(vscode.ViewColumn.Beside, textEditor)
     //     ),
 
     //     vscode.commands.registerTextEditorCommand(
-    //         'ts2zodPreview.reloadPreview',
+    //         'zodschemagen.reloadPreview',
     //         async _ => {
     //             // await context.waitForInit();
     //             // previewPanel.reload();
@@ -97,8 +97,8 @@ export async function activate(ctx: vscode.ExtensionContext) {
     ctx.subscriptions.push(
         vscode.workspace.registerTextDocumentContentProvider(myScheme, myProvider),
 
-        vscode.commands.registerTextEditorCommand('ts2zodPreview.showPreview', showPreview),
-        vscode.commands.registerTextEditorCommand('ts2zodPreview.showPreviewMenu', showPreview)
+        vscode.commands.registerTextEditorCommand('zodschemagen.showPreview', showPreview),
+        vscode.commands.registerTextEditorCommand('zodschemagen.showPreviewMenu', showPreview)
     );
 }
 

@@ -1,5 +1,5 @@
 {
-    "name": "ts2zod-live-preview",
+    "name": "zodschema-generator",
     "displayName": "Typescript to Zod schema generator",
     "description": "Display live preview of generated Zod schema from typescript source code",
     "version": "1.0.0",
@@ -9,12 +9,12 @@
     "icon": "docs/logo.png",
     "repository": {
         "type": "git",
-        "url": "https://github.com/psulek/vscode-ts2zod-livepreview"
+        "url": "https://github.com/psulek/vscode-zodschema-generator"
     },
     "bugs": {
-        "url": "https://github.com/psulek/vscode-ts2zod-livepreview/issues"
+        "url": "https://github.com/psulek/vscode-zodschema-generator/issues"
     },
-    "homepage": "https://github.com/psulek/vscode-ts2zod-livepreview/blob/main/README.md",
+    "homepage": "https://github.com/psulek/vscode-zodschema-generator/blob/main/README.md",
     "engines": {
         "vscode": "^1.79.0"
     },
@@ -23,6 +23,8 @@
         "zod",
         "ts-to-zod",
         "ts2zod",
+        "schema",
+        "generator",
         "preview"
     ],
     "categories": [
@@ -37,32 +39,32 @@
     "contributes": {
         "commands": [
             {
-                "category": "ts2zod Live Preview",
-                "command": "ts2zodPreview.showPreview",
+                "category": "Zod schema generator",
+                "command": "zodschemagen.showPreview",
                 "title": "Open Preview To Side"
             },
             {
-                "command": "ts2zodPreview.showPreviewMenu",
-                "title": "ts2zod: Generate Zod schema"
+                "command": "zodschemagen.showPreviewMenu",
+                "title": "Generate Zod schema"
             },
             {
-                "category": "ts2zod Live Preview",
-                "command": "ts2zodPreview.reloadPreview",
+                "category": "Zod schema generator",
+                "command": "zodschemagen.reloadPreview",
                 "title": "Reload Preview"
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "ts2zodPreview.showPreview",
+                    "command": "zodschemagen.showPreview",
                     "group": "navigation"
                 }
             ],
             "editor/context": [
 				{
-					"command": "ts2zodPreview.showPreviewMenu",
-					"when": "editorLangId == typescript && resourceScheme != 'ts2zodpreview'",
-					"group": "ts2zod"
+					"command": "zodschemagen.showPreviewMenu",
+					"when": "editorLangId == typescript && resourceScheme != 'zodschemagen'",
+					"group": "zodschemagen"
 				}
 			]
         }

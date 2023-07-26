@@ -1,2 +1,2 @@
-# Typescript to Zod Live Preview for Visual Studio Code
+# Typescript to Zod Schema generator extension for Visual Studio Code
 
