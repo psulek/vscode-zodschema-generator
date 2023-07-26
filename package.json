@@ -1,0 +1,114 @@
+{
+    "name": "ts2zod-live-preview",
+    "displayName": "Typescript to Zod schema generator",
+    "description": "Display live preview of generated Zod schema from typescript source code",
+    "version": "1.0.0",
+    "publisher": "psulek-solo",
+    "license": "MIT",
+    "author": "Peter Šulek",
+    "icon": "docs/logo.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/psulek/vscode-ts2zod-livepreview"
+    },
+    "bugs": {
+        "url": "https://github.com/psulek/vscode-ts2zod-livepreview/issues"
+    },
+    "homepage": "https://github.com/psulek/vscode-ts2zod-livepreview/blob/main/README.md",
+    "engines": {
+        "vscode": "^1.79.0"
+    },
+    "keywords": [
+        "typescript",
+        "zod",
+        "ts-to-zod",
+        "ts2zod",
+        "preview"
+    ],
+    "categories": [
+        "Visualization",
+        "Programming Languages",
+        "Other"
+    ],
+    "activationEvents": [
+        "onLanguage:typescript"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "category": "ts2zod Live Preview",
+                "command": "ts2zodPreview.showPreview",
+                "title": "Open Preview To Side"
+            },
+            {
+                "command": "ts2zodPreview.showPreviewMenu",
+                "title": "ts2zod: Generate Zod schema"
+            },
+            {
+                "category": "ts2zod Live Preview",
+                "command": "ts2zodPreview.reloadPreview",
+                "title": "Reload Preview"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "ts2zodPreview.showPreview",
+                    "group": "navigation"
+                }
+            ],
+            "editor/context": [
+				{
+					"command": "ts2zodPreview.showPreviewMenu",
+					"when": "editorLangId == typescript && resourceScheme != 'ts2zodpreview'",
+					"group": "ts2zod"
+				}
+			]
+        }
+    },
+    "scripts": {
+        "postinstall": "patch-package",
+        "create-patch": "npx patch-package ts-to-zod",
+        "lint": "eslint src --ext ts",
+        "vscode:prepublish": "npm run esbuild-base -- --minify",
+        "__vscode:prepublish": "npm run compile",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+        "compile": "npm run esbuild-base -- --sourcemap",
+        "compile-prod": "npm run esbuild-base -- --minify",
+        "watch": "npm run esbuild-base -- --sourcemap --watch",
+        "watch-tests": "npm run esbuild-test -- --sourcemap --watch",
+        "package": "npx vsce package",
+        "publish": "npx vsce publish"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^11.0.1",
+        "@types/glob": "^8.1.0",
+        "@types/lodash.debounce": "^4.0.7",
+        "@types/lodash.throttle": "^4.1.7",
+        "@types/markdown-it": "12.2.3",
+        "@types/mocha": "^10.0.1",
+        "@types/node": "20.2.5",
+        "@types/vscode": "^1.79.0",
+        "@typescript-eslint/eslint-plugin": "^5.59.8",
+        "@typescript-eslint/parser": "^5.59.8",
+        "@vscode/test-electron": "~2.3.3",
+        "chalk": "^4.0.0",
+        "cpx": "^1.5.0",
+        "crlf-normalize": "1.0.19",
+        "esbuild": "^0.18.11",
+        "eslint": "^8.41.0",
+        "fs-extra": "^6.0.0",
+        "glob": "^8.1.0",
+        "glob-all": "3.3.1",
+        "mocha": "^10.2.0",
+        "rimraf": "^5.0.1",
+        "patch-package": "^7.0.0"
+    },
+    "dependencies": {
+        "lodash.debounce": "^4.0.8",
+        "lodash.throttle": "^4.1.1",
+        "ts-to-zod": "^3.1.3",
+        "typescript": "^5.1.3"
+    }
+}
