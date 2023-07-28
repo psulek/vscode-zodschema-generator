@@ -3,14 +3,6 @@ export type ExtensionConfig = {
     logger?: ILogger;
 };
 
-export type PostMessage = {
-    command: 'update';
-    isEmpty: boolean;
-    file: string;
-    line: number;
-    isUntitled: boolean;
-};
-
 export type ILogger = {
     log: (level: 'info' | 'warn' | 'error', msg: string, err?: Error) => void;
 };

@@ -40,29 +40,24 @@
         "commands": [
             {
                 "category": "Zod schema generator",
-                "command": "zodschemagen.showPreview",
+                "command": "zodschemagen.genSchema",
                 "title": "Open Preview To Side"
             },
             {
-                "command": "zodschemagen.showPreviewMenu",
+                "command": "zodschemagen.genSchemaMenu",
                 "title": "Generate Zod schema"
-            },
-            {
-                "category": "Zod schema generator",
-                "command": "zodschemagen.reloadPreview",
-                "title": "Reload Preview"
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "zodschemagen.showPreview",
+                    "command": "zodschemagen.genSchema",
                     "group": "navigation"
                 }
             ],
             "editor/context": [
 				{
-					"command": "zodschemagen.showPreviewMenu",
+					"command": "zodschemagen.genSchemaMenu",
 					"when": "editorLangId == typescript && resourceScheme != 'zodschemagen'",
 					"group": "zodschemagen"
 				}
