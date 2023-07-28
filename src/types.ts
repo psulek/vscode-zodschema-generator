@@ -1,5 +1,5 @@
 export type ExtensionConfig = {
-    logging?: boolean;
+    quoteStyle: 'single' | 'double';
     logger?: ILogger;
 };
 

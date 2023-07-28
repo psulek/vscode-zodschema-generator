@@ -1,8 +1,9 @@
 import * as vscode from 'vscode';
 import path from 'path';
 import { generateSchema } from './generator';
+import { context, outputPaneName } from './context';
 
-export const customScheme = 'zodschemagen';
+export const customScheme = 'zodschemagenerator';
 
 export class SchemaContentProvider implements vscode.TextDocumentContentProvider {
     onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
@@ -11,7 +12,17 @@ export class SchemaContentProvider implements vscode.TextDocumentContentProvider
     provideTextDocumentContent(uri: vscode.Uri): string {
         const [target, isUntitled] = decodeLocation(uri);
         const editor = vscode.window.visibleTextEditors.find(x => x.document.uri.toString() === target.toString() && x.document.isUntitled === isUntitled);
-        return editor ? generateSchema(editor.document.getText()) : '';
+        let file = '';
+        let content = '';
+        try {
+            file = editor ? editor.document.fileName : '';
+            content = editor ? generateSchema(editor.document.getText()) : '';
+        } catch (error) {
+            content = `Error generating schema. Look at output pane '${outputPaneName}' for details.`;
+            context.log(`error`, `Failed to generate zod schema from file '${file}' `, error as Error);
+        }
+
+        return content;
     }
 }
 

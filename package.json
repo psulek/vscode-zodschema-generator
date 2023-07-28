@@ -32,36 +32,21 @@
         "Programming Languages",
         "Other"
     ],
-    "activationEvents": [
-        "onLanguage:typescript"
-    ],
     "main": "./out/extension.js",
     "contributes": {
         "commands": [
             {
-                "category": "Zod schema generator",
-                "command": "zodschemagen.genSchema",
-                "title": "Open Preview To Side"
-            },
-            {
-                "command": "zodschemagen.genSchemaMenu",
-                "title": "Generate Zod schema"
+                "command": "zodschemagenerator.genSchema",
+                "title": "Generate Zod schema (zodschema-generator)"
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "zodschemagen.genSchema",
+                    "command": "zodschemagenerator.genSchema",
                     "group": "navigation"
                 }
-            ],
-            "editor/context": [
-				{
-					"command": "zodschemagen.genSchemaMenu",
-					"when": "editorLangId == typescript && resourceScheme != 'zodschemagen'",
-					"group": "zodschemagen"
-				}
-			]
+            ]
         }
     },
     "scripts": {
@@ -103,8 +88,6 @@
         "patch-package": "^7.0.0"
     },
     "dependencies": {
-        "lodash.debounce": "^4.0.8",
-        "lodash.throttle": "^4.1.1",
         "ts-to-zod": "^3.1.3",
         "typescript": "^5.1.3"
     }

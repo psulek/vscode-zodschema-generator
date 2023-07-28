@@ -1,0 +1,29 @@
+quote styles:
+
+package.json:
+"configuration": [{
+    "id": "common",
+    "title": "Zod Schema Generator",
+    "properties": {
+        "zodschemagenerator.quotes": {
+            "type": "string",
+            "enum": [
+                "auto",
+                "single",
+                "double"
+            ],
+            "markdownEnumDescriptions": [
+                "`auto` - Infer quote style from preferred quote style setting (`typescript.preferences.quoteStyle`)",
+                "`single` - Always use single quotes: `'`",
+                "`double` - Always use double quotes: `\"`"
+            ],
+            "default": "auto",
+            "description": "Quote Style",
+            "scope": "window"
+        }
+    }
+}]
+
+"activationEvents": [
+        "onLanguage:typescript"
+    ],

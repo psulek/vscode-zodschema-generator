@@ -2,101 +2,58 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { ExtensionConfig, ILogger } from './types';
 
-export type VsCodeTheme = 'light' | 'dark';
-export const webViewPanelType = 'typedocPreview';
 const supportedExtensions = ['.ts', '.mts', '.tsx', '.mtsx'];
 
 const configKeys = {
-    
+    quoteStyle: 'zodschemagenerator.quotes',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    quoteStyle_ts: 'typescript.preferences.quoteStyle'
 };
 
-export class Context {
+export class Context implements ILogger {
     private ctx!: vscode.ExtensionContext;
-    private _tsLibraryFiles: string[] = [];
-    private contextInitialized = false;
-    private activeTheme: VsCodeTheme = 'light';
     private logger!: ILogger;
 
     init(ctx: vscode.ExtensionContext, logger?: ILogger): void {
         this.ctx = ctx;
         this.logger = logger ?? new VsCodeLogger();
-        this.setTheme(vscode.window.activeColorTheme.kind);
-
-        (async () => {
-            try {
-                // NOTE: here place some async init function call when required
-            } finally {
-                this.contextInitialized = true;
-            }
-        })();
-    }
-
-    get tsLibraryFiles(): string[] {
-        return this._tsLibraryFiles;
+        this.log('info', `Typescript to Zod schema generator initialized.`);
     }
 
     get vsContext(): vscode.ExtensionContext {
         return this.ctx;
     }
 
-    get contextIsInitialized(): boolean {
-        return this.contextInitialized;
+    log(level: 'info' | 'warn' | 'error', msg: string, err?: Error | undefined): void {
+        this.logger.log(level, msg, err);
     }
-
-    waitForInit(): Promise<void> {
-        return this.contextInitialized ? Promise.resolve() : new Promise(resolve => {
-            const end = Date.now() + (10 * 1000);
-            let ref: NodeJS.Timer | undefined = setInterval(() => {
-                if (ref && (this.contextInitialized || (Date.now() >= end))) {
-                    clearInterval(ref);
-                    ref = undefined;
-                    resolve();
-                }
-            }, 10);
-        });
-    }
-
-    setTheme(vsThemeKind: vscode.ColorThemeKind): void {
-        this.activeTheme = vsThemeKind === vscode.ColorThemeKind.Dark ? 'dark' : 'light';
-    }
-
-    getUri = (relativePath: string): vscode.Uri =>
-        vscode.Uri.joinPath(this.ctx.extensionUri, relativePath);
-
-    getMediaUri = (webview: vscode.Webview, filename: string, themed: boolean): vscode.Uri => {
-        const diskPath = themed
-            ? vscode.Uri.joinPath(this.ctx.extensionUri, 'media', this.activeTheme, filename)
-            : vscode.Uri.joinPath(this.ctx.extensionUri, 'media', filename);
-        return webview.asWebviewUri(diskPath);
-    };
 
     getConfig(): ExtensionConfig {
-        //const cfg = vscode.workspace.getConfiguration();
-        //const emptySignatures = cfg.get(configKeys.emptySignatures) as string;
+        const cfg = vscode.workspace.getConfiguration();
+        let quoteStyle = cfg.get(configKeys.quoteStyle) as string;
+        if (quoteStyle === 'auto') {
+            quoteStyle = cfg.get(configKeys.quoteStyle_ts) as string;
+        }
+
         return {
-            //hideEmptySignatures: emptySignatures === EmptySignaturesTypes.hide
+            quoteStyle: quoteStyle === 'single' ? 'single' : 'double'
         };
     }
-
-    /* async updateConfig(newConfig: ExtensionConfig) {
-        const emptySignatures = newConfig.hideEmptySignatures ? EmptySignaturesTypes.hide : EmptySignaturesTypes.show;
-        await vscode.workspace.getConfiguration().update(configKeys.emptySignatures, emptySignatures, vscode.ConfigurationTarget.Global);
-    } */
 }
 
 let vsCodeLoggerPanel: vscode.OutputChannel | undefined;
 
+export const outputPaneName = 'Zod Schema Generator';
+
 export class VsCodeLogger implements ILogger {
     log(level: 'info' | 'warn' | 'error', msg: string, err?: Error | undefined): void {
         if (!vsCodeLoggerPanel) {
-            vsCodeLoggerPanel = vscode.window.createOutputChannel('TypeDoc Live Preview');
+            vsCodeLoggerPanel = vscode.window.createOutputChannel(outputPaneName);
         }
 
         vsCodeLoggerPanel.appendLine(`[${level}] ${msg}` + (err ? `[${err.name}] ${err.message} ${err.stack}` : ''));
     }
 }
-
-//export const vsCodeLogger = new VsCodeLogger();
 
 export function isTypescriptFile(uriOrDocument: vscode.Uri | vscode.TextDocument): boolean {
     let uri: vscode.Uri;
