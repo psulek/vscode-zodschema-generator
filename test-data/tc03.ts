@@ -5,21 +5,11 @@ export interface HeroContact {
      * @format email
      */
     email: string;
-  
+
     /**
-     * The name of the hero.
-     *
-     * @minLength 2
-     * @maxLength 50
+     * energy status of the hero
      */
-    name: string;
-  
-    /**
-     * The phone number of the hero.
-     *
-     * @pattern ^([+]?d{1,2}[-s]?|)d{3}[-s]?d{3}[-s]?d{4}$
-     */
-    phoneNumber: string;
+    energy: 'positive' | 'negative';
   
     /**
      * Does the hero has super power?

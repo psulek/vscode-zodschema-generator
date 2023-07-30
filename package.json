@@ -37,7 +37,7 @@
         "commands": [
             {
                 "command": "zodschemagenerator.genSchema",
-                "title": "Generate Zod schema (zodschema-generator)"
+                "title": "Generate Zod schema from Typescript"
             }
         ],
         "menus": {
