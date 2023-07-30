@@ -2,4 +2,4 @@
 
 ## [1.0.0]
 
-- Initial release of `Typescript to Zod schema generator` extension
+- Initial release of `Zod schema generator` extension

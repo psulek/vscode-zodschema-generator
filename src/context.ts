@@ -17,7 +17,7 @@ export class Context implements ILogger {
     init(ctx: vscode.ExtensionContext, logger?: ILogger): void {
         this.ctx = ctx;
         this.logger = logger ?? new VsCodeLogger();
-        this.log('info', `Typescript to Zod schema generator initialized.`);
+        this.log('info', `Zod schema generator initialized.`);
     }
 
     get vsContext(): vscode.ExtensionContext {

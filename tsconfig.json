@@ -13,7 +13,6 @@
 		"strict": true
 	},
     "exclude": [
-        "preview.ts",
         "test-data",
         "out"
     ]

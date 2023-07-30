@@ -1,12 +1,12 @@
 {
     "name": "zodschema-generator",
-    "displayName": "Typescript to Zod schema generator",
+    "displayName": "Zod schema generator",
     "description": "Display live preview of generated Zod schema from typescript source code",
     "version": "1.0.0",
     "publisher": "psulek-solo",
     "license": "MIT",
     "author": "Peter Šulek",
-    "icon": "docs/logo.png",
+    "icon": "logo.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/psulek/vscode-zodschema-generator"
@@ -54,13 +54,12 @@
         "create-patch": "npx patch-package ts-to-zod",
         "lint": "eslint src --ext ts",
         "vscode:prepublish": "npm run esbuild-base -- --minify",
-        "__vscode:prepublish": "npm run compile",
         "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
         "compile": "npm run esbuild-base -- --sourcemap",
         "compile-prod": "npm run esbuild-base -- --minify",
         "watch": "npm run esbuild-base -- --sourcemap --watch",
         "watch-tests": "npm run esbuild-test -- --sourcemap --watch",
-        "package": "npx vsce package",
+        "package": "vsce package",
         "publish": "npx vsce publish"
     },
     "devDependencies": {
@@ -75,6 +74,7 @@
         "@typescript-eslint/eslint-plugin": "^5.59.8",
         "@typescript-eslint/parser": "^5.59.8",
         "@vscode/test-electron": "~2.3.3",
+        "@vscode/vsce": "^2.20.0",
         "chalk": "^4.0.0",
         "cpx": "^1.5.0",
         "crlf-normalize": "1.0.19",
@@ -84,8 +84,8 @@
         "glob": "^8.1.0",
         "glob-all": "3.3.1",
         "mocha": "^10.2.0",
-        "rimraf": "^5.0.1",
-        "patch-package": "^7.0.0"
+        "patch-package": "^7.0.0",
+        "rimraf": "^5.0.1"
     },
     "dependencies": {
         "ts-to-zod": "^3.1.3",
